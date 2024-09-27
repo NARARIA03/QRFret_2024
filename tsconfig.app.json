@@ -22,11 +22,13 @@
 
     "baseUrl": ".",
     "paths": {
+      "@apis/*": ["src/apis/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
-      "@router/*": ["src/router/*"]
+      "@router/*": ["src/router/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"]
