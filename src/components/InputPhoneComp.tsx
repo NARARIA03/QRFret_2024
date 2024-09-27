@@ -39,6 +39,7 @@ function InputPhoneComp(): React.JSX.Element {
       const rafNumber: number | undefined = await saveRaffleNumber(phoneNumber);
       if (rafNumber) {
         setCookie("rafNumber", rafNumber.toString());
+        setCookie("phoneNumber", phoneNumber.toString());
         navigate(0);
       }
     } else {
