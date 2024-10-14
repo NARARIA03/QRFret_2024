@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LandingPage(): React.JSX.Element {
+function LandingPage(): null {
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/raffle");
-  }, []);
+  }, [navigate]);
 
-  return <></>;
+  return null;
 }
 
 export default LandingPage;

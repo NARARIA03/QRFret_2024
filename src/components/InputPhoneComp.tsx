@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveRaffleNumber } from "@apis/saveRaffleNumber";
 import { setCookie } from "@utils/cookie";
 
-function InputPhoneComp(): React.JSX.Element {
+function InputPhoneComp(): JSX.Element {
   const navigate = useNavigate(); // useNavigate 훅 사용
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -48,12 +48,10 @@ function InputPhoneComp(): React.JSX.Element {
   };
 
   return (
-    <>
-      <label htmlFor="phone" className="block text-black">
-        추첨을 위해 전화번호를 입력해주세요
-      </label>
+    <div className="p-16 flex flex-col justify-center items-center text-slate-300">
+      <h1 className="text-2xl">추첨권 등록</h1>
+      <p className="mt-4 text-sm">추첨을 위해 전화번호를 입력해주세요</p>
       <input
-        id="phone"
         type="text"
         value={phoneNumber}
         onChange={handleInput}
@@ -61,15 +59,20 @@ function InputPhoneComp(): React.JSX.Element {
         maxLength={11}
         className={`${
           isValid ? "border-green-500" : "border-red-500"
-        } border-2`}
+        } w-full border-2 bg-stone-900 p-2 mx-2 my-1 rounded-lg focus:outline-none`}
       />
       {!isValid && (
-        <p className="text-red-500">올바른 전화번호를 입력해주세요.</p>
+        <p className="self-end text-xs text-red-500">
+          올바른 전화번호를 입력해주세요.
+        </p>
       )}
-      <button onClick={handleSubmit} className="p-2 border border-purple-500">
-        추첨 참여하기
+      <button
+        onClick={handleSubmit}
+        className="w-full p-2 m-2 mt-6 border rounded-lg"
+      >
+        추첨권 등록하기
       </button>
-    </>
+    </div>
   );
 }
 

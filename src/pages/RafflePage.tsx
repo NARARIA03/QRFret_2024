@@ -3,23 +3,23 @@ import { getCookie } from "@utils/cookie";
 import React, { useEffect, useState } from "react";
 
 function RafflePage(): React.JSX.Element {
-  const [cookiedRafNum, setCookiedRafNum] = useState<string | null>(null);
+  const [cookieRafNum, setCookieRafNum] = useState<string | null>(null);
 
   useEffect(() => {
     const rafNumber = getCookie("rafNumber");
     if (rafNumber) {
-      setCookiedRafNum(rafNumber);
+      setCookieRafNum(rafNumber);
     } else {
-      setCookiedRafNum(null);
+      setCookieRafNum(null);
     }
     console.log(rafNumber);
   }, []);
 
   return (
-    <div>
-      {cookiedRafNum ? (
+    <div className="bg-stone-900 w-screen h-screen">
+      {cookieRafNum ? (
         <div>
-          <p>{cookiedRafNum}</p>
+          <p>{cookieRafNum}</p>
         </div>
       ) : (
         <InputPhoneComp />
