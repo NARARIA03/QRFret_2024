@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function LandingPage(): null {
   const navigate = useNavigate();
   useEffect(() => {
+    localStorage.removeItem("isDev");
     navigate("/raffle");
   }, [navigate]);
 

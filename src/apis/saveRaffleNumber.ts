@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { raffleTransaction } from "./raffleTransaction";
+import { raffleTransaction } from "@apis/raffleTransaction";
 
 /**
  * @description 이미 추첨번호가 있다면 해당 추첨번호를 반환하고, 추첨번호가 없다면 transaction으로 새로 구해서 저장하고 반환한다
