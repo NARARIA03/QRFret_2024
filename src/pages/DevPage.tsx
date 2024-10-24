@@ -42,7 +42,7 @@ function DevPage(): JSX.Element | null {
   if (!raffleData) return null;
 
   return (
-    <div className="bg-black w-screen min-h-screen text-slate-200">
+    <div className="bg-zinc-950 w-screen min-h-screen pb-32 text-slate-200">
       <div className="w-full flex justify-center">
         <img src="/images/poster.jpeg" />
       </div>

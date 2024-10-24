@@ -50,7 +50,7 @@ function RafflePage(): React.JSX.Element {
   }, []);
 
   return (
-    <div className="bg-black w-screen min-h-screen">
+    <div className="bg-zinc-950 w-screen min-h-screen">
       <div className="w-full flex justify-center" onClick={handleLogoClick}>
         <img src="/images/poster.jpeg" />
       </div>

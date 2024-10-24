@@ -59,7 +59,7 @@ function InputPhoneComp(): JSX.Element {
         maxLength={11}
         className={`${
           isValid ? "border-green-500" : "border-red-500"
-        } w-full border-2 bg-stone-900 p-2 mx-2 my-1 rounded-lg focus:outline-none`}
+        } w-full border-2 bg-zinc-800 p-2 mx-2 my-1 rounded-lg focus:outline-none`}
       />
       {!isValid && (
         <p className="self-end text-xs text-red-500">
