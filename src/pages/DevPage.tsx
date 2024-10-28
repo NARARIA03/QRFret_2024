@@ -1,5 +1,6 @@
 import { getAllRaffleData } from "@apis/getAllRaffleData";
 import { resetAllRaffleData } from "@apis/resetAllRaffleData";
+import { resetLikeCount } from "@apis/resetLikeCount";
 import { removeCookie } from "@utils/cookie";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -13,6 +14,15 @@ function DevPage(): JSX.Element | null {
     const password = window.prompt("비밀번호를 입력하세요");
     if (password === import.meta.env.VITE_DEV_CLEAR_PASSWORD) {
       await resetAllRaffleData();
+    } else {
+      alert("비밀번호가 틀렸습니다");
+    }
+  };
+
+  const handleClearLikeCount = async () => {
+    const password = window.prompt("비밀번호를 입력하세요");
+    if (password === import.meta.env.VITE_DEV_CLEAR_PASSWORD) {
+      await resetLikeCount();
     } else {
       alert("비밀번호가 틀렸습니다");
     }
@@ -52,6 +62,12 @@ function DevPage(): JSX.Element | null {
           onClick={handleClearRaffleDataBtn}
         >
           추첨권 데이터 초기화 (DB 리셋)
+        </button>
+        <button
+          className="px-2 py-1 w-8/12 border rounded-lg m-2 mb-4"
+          onClick={handleClearLikeCount}
+        >
+          곡 좋아요 수 초기화 (DB 리셋)
         </button>
         <button
           className="px-2 py-1 w-8/12 border rounded-lg m-2 mb-4"
