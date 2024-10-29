@@ -1,16 +1,44 @@
 import { useSetList } from "@hooks/useSetList";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { getLocalStorage, setLocalStorage } from "@utils/localStorage";
+import { useEffect, useState } from "react";
 
 function SetListPage() {
-  const [clicked, setClicked] = useState<string | null>(null);
-  const { setList, appendLikeCount } = useSetList();
+  const [likeSongs, setLikeSongs] = useState<string[]>([]);
+  const { setList, appendLike, removeLike } = useSetList();
 
-  const handleButtonClick = async (title: string) => {
-    setClicked(title);
-    await appendLikeCount(title);
-    setClicked(null);
+  const handleIncrease = async (title: string) => {
+    if (likeSongs.includes(title)) {
+      alert("이미 추천한 곡입니다.");
+      return;
+    }
+    if (likeSongs.length >= 5) {
+      alert("최대 5곡까지 추천할 수 있습니다.");
+      return;
+    }
+    await appendLike(title);
+    const newLikeSongs = [...likeSongs, title];
+    setLikeSongs(newLikeSongs);
+    setLocalStorage("likedSongs", JSON.stringify(newLikeSongs));
   };
+
+  const handleDecrease = async (title: string) => {
+    if (!likeSongs.includes(title)) {
+      alert("아직 추천하지 않은 곡입니다.");
+      return;
+    }
+    await removeLike(title);
+    const newLikeSongs = [...likeSongs.filter((t) => t !== title)];
+    setLikeSongs(newLikeSongs);
+    setLocalStorage("likedSongs", JSON.stringify(newLikeSongs));
+  };
+
+  useEffect(() => {
+    const savedLikeSongs: string[] = JSON.parse(
+      getLocalStorage("likedSongs") || "[]"
+    );
+    setLocalStorage("likedSongs", JSON.stringify(savedLikeSongs));
+    setLikeSongs(savedLikeSongs);
+  }, []);
 
   return (
     <div className="bg-zinc-950 text-slate-200 w-screen min-h-screen flex flex-col gap-6 p-6">
@@ -61,22 +89,19 @@ function SetListPage() {
             )}
           </div>
 
-          <div className="flex justify-between items-center pt-4">
-            <motion.span
-              className="text-slate-400"
-              key={set.likeCount}
-              initial={{ scale: 1 }}
-              animate={{ scale: clicked === set.title ? 1.5 : 1 }}
-              exit={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            >
-              추천 수: {set.likeCount}
-            </motion.span>
+          <div className="flex justify-between items-center pt-4 text-slate-400">
+            추천 수: {set.likeCount}
             <button
               className="bg-red-500 hover:bg-red-600 text-slate-200 font-semibold py-1 px-4 rounded"
-              onClick={() => handleButtonClick(set.title)}
+              onClick={() => {
+                if (likeSongs.includes(set.title)) {
+                  handleDecrease(set.title);
+                } else {
+                  handleIncrease(set.title);
+                }
+              }}
             >
-              👍🏻 추천하기
+              {likeSongs.includes(set.title) ? "추천 취소하기" : "👍🏻 추천하기"}
             </button>
           </div>
         </div>
