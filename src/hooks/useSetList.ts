@@ -7,7 +7,6 @@ import {
   where,
   updateDoc,
   increment,
-  onSnapshot,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -48,14 +47,17 @@ export const useSetList = () => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, "setList"), orderBy("order"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      setSetList(querySnapshot.docs.map((doc) => doc.data() as SetList));
-    });
-
-    return () => {
-      unsubscribe();
+    const fetch = async () => {
+      try {
+        const q = query(collection(db, "setList"), orderBy("order"));
+        const querySnapshot = await getDocs(q);
+        setSetList(querySnapshot.docs.map((doc) => doc.data() as SetList));
+      } catch (err) {
+        console.error("Error fetching set list:", err);
+      }
     };
+
+    fetch();
   }, []);
 
   return { setList, appendLike, removeLike };
