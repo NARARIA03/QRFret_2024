@@ -89,8 +89,7 @@ function SetListPage() {
             )}
           </div>
 
-          <div className="flex justify-between items-center pt-4 text-slate-400">
-            추천 수: {set.likeCount}
+          <div className="flex justify-end items-center pt-4 text-slate-400">
             <button
               className="bg-red-500 hover:bg-red-600 text-slate-200 font-semibold py-1 px-4 rounded"
               onClick={() => {
