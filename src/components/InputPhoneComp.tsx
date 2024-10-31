@@ -49,7 +49,7 @@ function InputPhoneComp(): JSX.Element {
 
   return (
     <div className="p-16 flex flex-col justify-center items-center text-slate-300">
-      <h1 className="text-xl">추첨권 등록</h1>
+      <h1 className="text-2xl">추첨권 등록</h1>
       <p className="mt-4 text-sm">추첨을 위해 전화번호를 입력해주세요</p>
       <input
         type="text"
