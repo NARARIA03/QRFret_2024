@@ -72,10 +72,13 @@ function InputPhoneComp(): JSX.Element {
       >
         추첨권 등록하기
       </button>
-      <p className="mt-2 text-[8px] text-pretty text-start">
-        공연 1부와 2부 사이 쉬는시간에 관객 여러분들을 위한 경품 추첨 이벤트가
-        진행됩니다. 다양한 상품이 준비되어 있으니, 전화번호를 입력해 추첨
-        이벤트에 참여해보세요!
+      <p className="text-xs self-start mt-4">
+        공연 1부와 2부 사이에 관객 여러분들을 위한 경품 추첨 이벤트가
+        진행됩니다.
+      </p>
+      <p className="text-xs self-start">
+        다양한 상품이 준비되어 있으니, 전화번호를 입력해 추첨 이벤트에
+        참여해보세요!
       </p>
     </div>
   );

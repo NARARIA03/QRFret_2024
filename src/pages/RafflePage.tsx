@@ -1,3 +1,4 @@
+import Footer from "@components/Footer";
 import InputPhoneComp from "@components/InputPhoneComp";
 import ViewRaffleComp from "@components/ViewRaffleComp";
 import { getCookie } from "@utils/cookie";
@@ -50,7 +51,7 @@ function RafflePage(): React.JSX.Element {
   }, []);
 
   return (
-    <div className="bg-zinc-950 w-screen min-h-screen">
+    <div className="bg-zinc-950 w-screen min-h-screen flex flex-col justify-between">
       <div className="w-full flex justify-center" onClick={handleLogoClick}>
         <img src="/images/poster.jpeg" />
       </div>
@@ -59,6 +60,7 @@ function RafflePage(): React.JSX.Element {
       ) : (
         <InputPhoneComp />
       )}
+      <Footer />
     </div>
   );
 }
