@@ -9,24 +9,20 @@ function RafflePage(): React.JSX.Element {
   // 로고를 5초 안에 10번 클릭하면
   // 비밀번호를 확인받고 DevPage로 이동시키는 함수를 반환하는 커스텀 훅
   const handleLogoClick = useLogoClick();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [cookieRafNum, setCookieRafNum] = useState<string | null>(null);
-  const [cookiePhoneNum, setCookiePhoneNum] = useState<string | null>("");
+  const [cookiePhoneNum, setCookiePhoneNum] = useState<string | null>(null);
 
   useEffect(() => {
     const rafNumber = getCookie("rafNumber");
     const phoneNum = getCookie("phoneNumber");
+
     localStorage.removeItem("isDev");
-    if (rafNumber) {
-      setCookieRafNum(rafNumber);
-    } else {
-      setCookieRafNum(null);
-    }
-    if (phoneNum) {
-      setCookiePhoneNum(phoneNum);
-    } else {
-      setCookiePhoneNum(null);
-    }
+    setCookieRafNum(rafNumber || null);
+    setCookiePhoneNum(phoneNum || null);
+
+    setIsLoading(false);
   }, []);
 
   return (
@@ -34,14 +30,16 @@ function RafflePage(): React.JSX.Element {
       <div className="w-full flex justify-center" onClick={handleLogoClick}>
         <img src="/images/header.png" className="object-cover w-full" />
       </div>
-      {cookieRafNum && cookiePhoneNum ? (
-        <ViewRaffleComp raffleNum={cookieRafNum} phoneNum={cookiePhoneNum} />
-      ) : (
-        <InputPhoneComp
-          setCookieRafNum={setCookieRafNum}
-          setCookiePhoneNum={setCookiePhoneNum}
-        />
-      )}
+      {!isLoading &&
+        (cookieRafNum && cookiePhoneNum ? (
+          <ViewRaffleComp raffleNum={cookieRafNum} phoneNum={cookiePhoneNum} />
+        ) : (
+          <InputPhoneComp
+            setCookieRafNum={setCookieRafNum}
+            setCookiePhoneNum={setCookiePhoneNum}
+          />
+        ))}
+
       <Footer />
     </div>
   );
