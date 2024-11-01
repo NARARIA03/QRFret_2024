@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { saveRaffleNumber } from "@apis/saveRaffleNumber";
 import { setCookie } from "@utils/cookie";
+import Loading from "./Loading";
 
-function InputPhoneComp(): JSX.Element {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+interface Props {
+  setCookieRafNum: React.Dispatch<React.SetStateAction<string | null>>;
+  setCookiePhoneNum: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+function InputPhoneComp({
+  setCookieRafNum,
+  setCookiePhoneNum,
+}: Props): JSX.Element {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /**
    * @description 전화번호 입력이 적절한지 확인하는 함수
@@ -35,21 +43,34 @@ function InputPhoneComp(): JSX.Element {
    * @description 참여하기 버튼 클릭 이벤트 핸들러
    */
   const handleSubmit = async () => {
-    if (phoneNumber && isValid) {
-      const rafNumber: number | undefined = await saveRaffleNumber(phoneNumber);
-      if (rafNumber) {
-        setCookie("rafNumber", rafNumber.toString());
-        setCookie("phoneNumber", phoneNumber.toString());
-        navigate(0);
-      }
-    } else {
+    if (!phoneNumber || !isValid) {
       alert("전화번호를 확인해주세요.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const rafNumber = await saveRaffleNumber(phoneNumber);
+      if (!rafNumber) {
+        alert("응답이 올바르지 않습니다. 다시 시도해주세요.");
+        return;
+      }
+
+      setCookie("rafNumber", rafNumber.toString());
+      setCookie("phoneNumber", phoneNumber.toString());
+      setCookieRafNum(rafNumber.toString());
+      setCookiePhoneNum(phoneNumber.toString());
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="p-16 flex flex-col justify-center items-center text-slate-300">
-      <h1 className="text-2xl">추첨권 등록</h1>
+      <Loading isLoading={isLoading} />
+      <h1 className="text-3xl text-center font-bold">추첨권 등록</h1>
       <p className="mt-4 text-sm">추첨을 위해 전화번호를 입력해주세요</p>
       <input
         type="text"

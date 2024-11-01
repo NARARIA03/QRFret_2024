@@ -58,8 +58,9 @@ function DevPage(): JSX.Element | null {
     <>
       <div className="bg-zinc-950 w-screen min-h-screen pb-32 text-slate-200">
         <div className="w-full flex justify-center">
-          <img src="/images/poster.jpeg" />
+          <img src="/images/header.png" />
         </div>
+        <h1 className="text-3xl text-center font-bold mt-4">개발자 페이지</h1>
         <div className="w-full mt-8 flex flex-col items-center">
           <button
             className="px-2 py-1 w-8/12 border rounded-lg m-2 mb-4"

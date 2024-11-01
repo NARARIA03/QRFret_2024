@@ -1,38 +1,17 @@
 import Footer from "@components/Footer";
 import InputPhoneComp from "@components/InputPhoneComp";
 import ViewRaffleComp from "@components/ViewRaffleComp";
+import { useLogoClick } from "@hooks/useLogoClick";
 import { getCookie } from "@utils/cookie";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function RafflePage(): React.JSX.Element {
-  const navigate = useNavigate();
+  // 로고를 5초 안에 10번 클릭하면
+  // 비밀번호를 확인받고 DevPage로 이동시키는 함수를 반환하는 커스텀 훅
+  const handleLogoClick = useLogoClick();
+
   const [cookieRafNum, setCookieRafNum] = useState<string | null>(null);
   const [cookiePhoneNum, setCookiePhoneNum] = useState<string | null>("");
-  const [clickCnt, setClickCnt] = useState<number>(0);
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-
-  const handleLogoClick = () => {
-    if (clickCnt === 0) {
-      const newTimer = setTimeout(() => {
-        setClickCnt(0);
-      }, 5000);
-      setTimer(newTimer);
-    }
-    if (clickCnt + 1 >= 10 && timer) {
-      clearTimeout(timer);
-      const password = window.prompt("비밀번호를 입력하세요");
-      if (password === import.meta.env.VITE_DEV_PASSWORD) {
-        localStorage.setItem("isDev", "true");
-        navigate("/dev");
-      } else {
-        alert("비밀번호가 틀렸습니다");
-      }
-      setClickCnt(0);
-    } else {
-      setClickCnt((prev) => prev + 1);
-    }
-  };
 
   useEffect(() => {
     const rafNumber = getCookie("rafNumber");
@@ -51,14 +30,17 @@ function RafflePage(): React.JSX.Element {
   }, []);
 
   return (
-    <div className="bg-zinc-950 w-screen min-h-screen flex flex-col justify-between">
+    <div className="bg-zinc-950 w-screen min-h-screen flex flex-col justify-between text-slate-200">
       <div className="w-full flex justify-center" onClick={handleLogoClick}>
         <img src="/images/header.png" className="object-cover w-full" />
       </div>
       {cookieRafNum && cookiePhoneNum ? (
         <ViewRaffleComp raffleNum={cookieRafNum} phoneNum={cookiePhoneNum} />
       ) : (
-        <InputPhoneComp />
+        <InputPhoneComp
+          setCookieRafNum={setCookieRafNum}
+          setCookiePhoneNum={setCookiePhoneNum}
+        />
       )}
       <Footer />
     </div>

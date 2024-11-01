@@ -1,11 +1,17 @@
 import Footer from "@components/Footer";
+import Loading from "@components/Loading";
+import { useLogoClick } from "@hooks/useLogoClick";
 import { useSetList } from "@hooks/useSetList";
 import { getLocalStorage, setLocalStorage } from "@utils/localStorage";
 import { useEffect, useState } from "react";
 
 function SetListPage() {
+  // 로고를 5초 안에 10번 클릭하면
+  // 비밀번호를 확인받고 DevPage로 이동시키는 함수를 반환하는 커스텀 훅
+  const handleLogoClick = useLogoClick();
+
   const [likeSongs, setLikeSongs] = useState<string[]>([]);
-  const { setList, appendLike, removeLike } = useSetList();
+  const { setList, isLoading, appendLike, removeLike } = useSetList();
 
   const handleIncrease = async (title: string) => {
     if (likeSongs.includes(title)) {
@@ -43,8 +49,12 @@ function SetListPage() {
 
   return (
     <>
+      <Loading isLoading={isLoading} />
+      <div className="w-full flex justify-center" onClick={handleLogoClick}>
+        <img src="/images/header.png" className="object-cover w-full" />
+      </div>
       <div className="bg-zinc-950 text-slate-200 w-screen min-h-screen flex flex-col gap-6 p-6">
-        <h1 className="text-3xl text-center font-bold">공연 세트리스트</h1>
+        <h1 className="text-3xl text-center font-bold mt-4">공연 세트리스트</h1>
         {setList.map((set, index) => (
           <div className="bg-zinc-900 rounded-lg p-6 space-y-4" key={index}>
             <div className="space-y-1">
