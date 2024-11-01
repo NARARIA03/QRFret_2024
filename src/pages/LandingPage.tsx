@@ -18,16 +18,16 @@ function LandingPage(): JSX.Element {
             14Fret 정기공연: PRISM
           </h1>
           <Link
-            to="/raffle"
-            className="w-1/2 border bg-zinc-900 py-3 px-12 mt-12 rounded-lg hover:bg-zinc-600 text-center"
+            to="/setlist"
+            className="w-1/2 border text-sm bg-zinc-900 mt-12 py-3 rounded-lg hover:bg-zinc-600 text-center"
           >
-            추첨 이벤트 참여
+            공연 세트리스트
           </Link>
           <Link
-            to="/setlist"
-            className="w-1/2 border bg-zinc-900 py-3 px-12 mt-4 rounded-lg hover:bg-zinc-600 text-center"
+            to="/raffle"
+            className="w-1/2 border text-sm bg-zinc-900 mt-4 py-3 rounded-lg hover:bg-zinc-600 text-center"
           >
-            공연 셋리스트
+            추첨 이벤트 참여
           </Link>
         </div>
         <Footer />
