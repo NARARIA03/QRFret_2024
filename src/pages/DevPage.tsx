@@ -17,6 +17,7 @@ function DevPage(): JSX.Element | null {
     const password = window.prompt("비밀번호를 입력하세요");
     if (password === import.meta.env.VITE_DEV_CLEAR_PASSWORD) {
       await resetAllRaffleData();
+      await fetchRaffleData();
     } else {
       alert("비밀번호가 틀렸습니다");
     }
@@ -26,6 +27,7 @@ function DevPage(): JSX.Element | null {
     const password = window.prompt("비밀번호를 입력하세요");
     if (password === import.meta.env.VITE_DEV_CLEAR_PASSWORD) {
       await resetLikeCount();
+      navigate(0);
     } else {
       alert("비밀번호가 틀렸습니다");
     }
